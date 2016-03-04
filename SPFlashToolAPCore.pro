@@ -413,8 +413,7 @@ HEADERS += \
     BootRom/type_define.h \
     BootRom/common_struct.h \
     Setting/ReadbackWithoutScatterSetting.h \
-    Cmd/ReadbackWithoutScatterCommand.h \
-    BootRom/error_code.h
+    Cmd/ReadbackWithoutScatterCommand.h
 
 linux:HEADERS += Linux/WINDEF.H \
     Linux/linux_flash_tool.h \
