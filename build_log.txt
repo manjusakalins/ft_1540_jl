@@ -1,0 +1,5 @@
+make.exe[1]: Entering directory `C:/Download/SP_Flash_Tool_src_5.1540.00.000/SP_Flash_Tool_src_5.1540.00.000'
+call "C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\vcvars32.bat"
+Системе не удается найти указанный путь.
+make.exe[1]: *** [set-up] Error 1
+make.exe[1]: Leaving directory `C:/Download/SP_Flash_Tool_src_5.1540.00.000/SP_Flash_Tool_src_5.1540.00.000'
