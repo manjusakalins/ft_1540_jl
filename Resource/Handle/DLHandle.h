@@ -30,6 +30,10 @@ public:
     void EnableROM(const std::string &rom_name, bool enable);
     void EnableDAChksum(int level);
     void SetStopLoadFlag(int* stop_flag);
+
+    //==
+    bool createDocList(std::string &real_dir, std::list<std::string> &doc_list);
+    bool custom_rom_load(const std::string &scat_file);
 };
 
 }
