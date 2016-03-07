@@ -68,6 +68,8 @@ bool DLHandle::custom_rom_load(const std::string &scat_file)
 	file_name_map.insert(std::pair<std::string, char>("system", 'Y'));
 	file_name_map.insert(std::pair<std::string, char>("cache", 'H'));
 	file_name_map.insert(std::pair<std::string, char>("userdata", 'S'));
+	file_name_map.insert(std::pair<std::string, char>("tee1", 'T'));
+	file_name_map.insert(std::pair<std::string, char>("tee2", 'T'));
 
 	//4.4
 	file_name_map.insert(std::pair<std::string, char>("mbr", 'M'));
