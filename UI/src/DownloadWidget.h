@@ -43,6 +43,8 @@ public:
           return this->scene_;
    }
 
+    int get_froce_pmt_dl_flag();
+
     DECLARE_TABWIDGET_VFUNCS()
 
     virtual void onPlatformChanged();

@@ -66,9 +66,14 @@ bool DLOnlyCommand::CheckPMTLayoutChange(const QSharedPointer<Connection> &conn)
             }
             else
             {
-                LOGD("PMT changed for <%s>: addr<0x%llx>-->addr<0x%llx>, len<0x%llx>-->len<0x%llx>",
+                LOGI("PMT changed for <%s>: addr<0x%llx>-->addr<0x%llx>, len<0x%llx>-->len<0x%llx>",
                         rom_it->name, pmt->begin_addr, rom_it->begin_addr, pmt->image_length, rom_it->partition_size);
-                ret = true;
+				
+				if (dl_setting_->get_force_download_pmt() == 1) {
+					LOGI("#### GET FORCE download pmt flag");
+					ret = false;
+				} else
+					ret = true;
                 break;
             }
         }

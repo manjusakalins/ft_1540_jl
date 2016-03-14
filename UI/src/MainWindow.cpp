@@ -310,6 +310,7 @@ QSharedPointer<APCore::DADownloadAllSetting> MainWindow::CreateDownloadSetting()
     setting->set_cb_da_chksum_progress(main_callbacks_->DADLChksumProgress);
     setting->set_cb_cert_init(main_callbacks_->CERT_Pre_Process_Init);
     setting->set_cb_cert_progress(main_callbacks_->CERT_Post_Process_Progress);
+	setting->set_force_download_pmt(download_widget->get_froce_pmt_dl_flag());
 
     return setting;
 }

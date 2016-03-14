@@ -1227,3 +1227,8 @@ void DownloadWidget::on_tableWidget_itemChanged(QTableWidgetItem *item)
     UpdateHeadviewCheckState();
 }
 
+int DownloadWidget::get_froce_pmt_dl_flag(void)
+{
+	return ui_->forceDownPmt_CheckBox->isChecked();
+}
+

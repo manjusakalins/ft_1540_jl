@@ -105,6 +105,16 @@ public:
         scene_ = scene;
     }
 
+    void set_force_download_pmt(int in_force)
+    {
+        force_download_pmt = in_force;
+    }
+
+    int get_force_download_pmt(void)
+    {
+        return force_download_pmt;
+    }
+
 private:
     CALLBACK_DA_REPORT  cb_da_report;
     CALLBACK_BOOTLOADER_DOWNLOAD_PROGRESS_INIT cb_bl_dl_init;
@@ -123,6 +133,7 @@ private:
     APKey* session_id;
     std::string chip_name_;
     Download_Scene scene_;
+    int force_download_pmt;
 };
 
 }

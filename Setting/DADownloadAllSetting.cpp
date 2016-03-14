@@ -12,7 +12,8 @@ DADownloadAllSetting::DADownloadAllSetting():
     cb_da_chksum_init(NULL),
     cb_da_chksum_progress(NULL),
     cb_dl_init(NULL),
-    cb_dl_prog(NULL)
+    cb_dl_prog(NULL),
+    force_download_pmt(0)
 {
 }
 
