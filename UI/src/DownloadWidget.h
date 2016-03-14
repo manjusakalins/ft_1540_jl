@@ -144,6 +144,8 @@ private slots:
     void on_comboBox_Scene_activated(int index);
     void on_toolButton_Certification_clicked();
     void on_tableWidget_itemChanged(QTableWidgetItem *item);
+
+    void on_skipShowOK_CheckBox_stateChanged(int state);
 };
 
 #endif // DOWNLOADWIDGET_H

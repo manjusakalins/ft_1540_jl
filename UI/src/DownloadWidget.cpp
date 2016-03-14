@@ -1232,3 +1232,9 @@ int DownloadWidget::get_froce_pmt_dl_flag(void)
 	return ui_->forceDownPmt_CheckBox->isChecked();
 }
 
+void DownloadWidget::on_skipShowOK_CheckBox_stateChanged(int state)
+{
+	LOGI("########## %s %d ##########: state: %d\n", __func__, __LINE__, state);
+	main_window_->SetSkipOkFlag(state);
+}
+

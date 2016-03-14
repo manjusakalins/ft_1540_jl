@@ -248,6 +248,12 @@ public:
 
     void SetUARTBaudrateIndex(unsigned int index);
 
+    void SetSkipOkFlag(int state)
+    {
+        skip_ok = state;
+    }
+    int GetSkipOkFlag(void)
+    {return skip_ok;}
 private:
     Ui::MainWindow *ui;
     MainController *main_controller_;
@@ -311,6 +317,7 @@ private:
     bool is_ok_;
     bool is_scidl_visible_;
     QTimer* thread_timer_;
+    int skip_ok;
 
 
     //For send error report

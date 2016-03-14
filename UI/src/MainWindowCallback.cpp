@@ -363,7 +363,9 @@ void MainWindowCallback::slot_OperationOK()
             (main_window->isAutoPollingEnable() && main_window->isPollingFinish()))
     {
         main_window->GetOkDialog()->setModal(true);
-        main_window->GetOkDialog()->exec();
+
+		if (main_window->GetSkipOkFlag() == 0)
+			main_window->GetOkDialog()->exec();
 
         main_window->ResetStatus();
 

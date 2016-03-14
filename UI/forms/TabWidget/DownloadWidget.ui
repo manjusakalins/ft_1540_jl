@@ -117,18 +117,12 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="4">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+      <item row="3" column="3">
+       <widget class="QCheckBox" name="forceDownPmt_CheckBox">
+        <property name="text">
+         <string>ForceDL_pmt</string>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
       <item row="3" column="1">
        <widget class="QToolButton" name="toolButton_Certification">
@@ -168,10 +162,23 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
-       <widget class="QCheckBox" name="forceDownPmt_CheckBox">
+      <item row="3" column="5">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="4">
+       <widget class="QCheckBox" name="skipShowOK_CheckBox">
         <property name="text">
-         <string>ForceDL_pmt</string>
+         <string>skip_s_ok</string>
         </property>
        </widget>
       </item>

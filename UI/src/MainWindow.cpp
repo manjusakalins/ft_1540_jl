@@ -78,6 +78,7 @@ MainWindow::MainWindow(QWidget *parent) :
     auto_polling_upper_limit_(0),
     finish_(false),
     is_ok_(true),
+    skip_ok(false),
     is_scidl_visible_(false)
 {
     ui->setupUi(this);
