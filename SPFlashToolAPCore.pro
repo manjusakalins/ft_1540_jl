@@ -213,7 +213,10 @@ SOURCES += \
     Setting/DLWithoutScatterSetting.cpp \
     Cmd/DLWithoutScatterCommand.cpp \
     Setting/ReadbackWithoutScatterSetting.cpp \
-    Cmd/ReadbackWithoutScatterCommand.cpp
+    Cmd/ReadbackWithoutScatterCommand.cpp \
+	UI/src/hexedit_src/qhexedit.cpp \
+    UI/src/hexedit_src/chunks.cpp \
+    UI/src/hexedit_src/commands.cpp
 
 # ONLY Windows related begins here
 win32:SOURCES += Host/Win/RuntimeMemory.cpp \
@@ -413,7 +416,10 @@ HEADERS += \
     BootRom/type_define.h \
     BootRom/common_struct.h \
     Setting/ReadbackWithoutScatterSetting.h \
-    Cmd/ReadbackWithoutScatterCommand.h
+    Cmd/ReadbackWithoutScatterCommand.h \
+	UI/src/hexedit_src/qhexedit.h \
+    UI/src/hexedit_src/chunks.h \
+    UI/src/hexedit_src/commands.h
 
 linux:HEADERS += Linux/WINDEF.H \
     Linux/linux_flash_tool.h \
