@@ -216,7 +216,8 @@ SOURCES += \
     Cmd/ReadbackWithoutScatterCommand.cpp \
 	UI/src/hexedit_src/qhexedit.cpp \
     UI/src/hexedit_src/chunks.cpp \
-    UI/src/hexedit_src/commands.cpp
+    UI/src/hexedit_src/commands.cpp \
+    UI/src/JlinkParameterWidget.cpp
 
 # ONLY Windows related begins here
 win32:SOURCES += Host/Win/RuntimeMemory.cpp \
@@ -419,7 +420,8 @@ HEADERS += \
     Cmd/ReadbackWithoutScatterCommand.h \
 	UI/src/hexedit_src/qhexedit.h \
     UI/src/hexedit_src/chunks.h \
-    UI/src/hexedit_src/commands.h
+    UI/src/hexedit_src/commands.h \
+    UI/src/JlinkParameterWidget.h
 
 linux:HEADERS += Linux/WINDEF.H \
     Linux/linux_flash_tool.h \
@@ -456,7 +458,8 @@ FORMS += \
     UI/forms/NorFlashWidget.ui \
     UI/forms/TabWidget/SCIDownloadWidget.ui \
     UI/forms/TabWidget/CloneDownloadWidget.ui \
-    UI/forms/EncryDialog.ui
+    UI/forms/EncryDialog.ui \
+	UI/forms/TabWidget/JlinkParameterWidget.ui
 
 
 RESOURCES += \

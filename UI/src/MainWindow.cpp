@@ -41,6 +41,8 @@
 #include "../../Err/ErrorLookup.h"
 #include "../../Host/Inc/RuntimeMemory.h"
 #include "EncryDialog.h"
+#include "JlinkParameterWidget.h"
+
 
 #include <QtDebug>
 #include <QtGui>
@@ -128,12 +130,14 @@ void MainWindow::CreateWidget()
     bromAdapter_widget = new BromAdapterWidget(ui->tabWidget, this);
     sciDownload_widget_ = new SCIDownloadWidget(ui->tabWidget, this);
     cloneDownload_wdiget_ = new CloneDownloadWidget(ui->tabWidget, this);
+	jlinkParameter_widget = new JlinkParameterWidget(ui->tabWidget, this);
 
     tab_widgets.push_back(welcome_widget);
     tab_widgets.push_back(format_widget);
     tab_widgets.push_back(download_widget);
     tab_widgets.push_back(readback_widget);
     tab_widgets.push_back(memtest_widget);
+	tab_widgets.push_back(jlinkParameter_widget);
 
     for(std::list<TabWidgetBase*>::const_iterator it=tab_widgets.begin();
         it != tab_widgets.end(); ++it)
