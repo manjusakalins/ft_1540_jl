@@ -45,6 +45,7 @@ public:
     virtual void OnScatterChanged(bool showRegion);
     
     QHexEdit *hexEdit;
+    QByteArray jlinkParam;
 private:
     MainWindow *main_window_;
     Ui::JlinkParameterWidget *ui_;
@@ -61,6 +62,8 @@ private slots:
 
     void on_pushButton_download_clicked();
     void on_pushButton_stop_clicked();
+    void dataChanged();//for hexedit.
+    void setOverwriteMode(bool mode);//for hexedit.
 
 };
 

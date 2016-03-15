@@ -6,8 +6,8 @@
 
 #include "qhexedit.h"
 
-const int HEXCHARS_IN_LINE = 47;
-const int BYTES_PER_LINE = 16;
+const int HEXCHARS_IN_LINE = 32;
+const int BYTES_PER_LINE = 10;
 
 
 // ********************************************************************** Constructor, destructor

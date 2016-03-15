@@ -22,9 +22,16 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
     ui_(new Ui::JlinkParameterWidget)
 {
     ui_->setupUi(this);	
+
+	//hexedit init
     hexEdit = new QHexEdit;
+	jlinkParam.fill('0', 20);
+	hexEdit->setData(jlinkParam);
+	connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
+    connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(dataChanged()));
 	ui_->verticalLayout->addWidget(hexEdit);
-    //ui_->tableWidget->setHorizontalHeader(header_);
+
+
     //ui_->tableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
@@ -88,6 +95,10 @@ void JlinkParameterWidget::OnScatterChanged(bool showRegion)
 
 void JlinkParameterWidget::on_pushButton_download_clicked()
 {
+	QBuffer tmpbuffer;
+	tmpbuffer.setBuffer(&jlinkParam);
+	hexEdit->write(tmpbuffer);
+	LOGI("########## %s %d ########## %d %d\n", __func__, __LINE__, jlinkParam.at(0), hexEdit->dataAt(0,1).at(0));
 }
 
 
@@ -96,3 +107,20 @@ void JlinkParameterWidget::on_pushButton_stop_clicked()
 
 }
 
+void JlinkParameterWidget::dataChanged()
+{
+	LOGI("########## %s %d ########## %d %d\n", __func__, __LINE__, jlinkParam.at(0), hexEdit->dataAt(0,1).at(0));
+	#if 0
+	QBuffer tmpbuffer;
+	tmpbuffer.setBuffer(&jlinkParam);
+	hexEdit->write(tmpbuffer);
+	LOGI("########## %s %d ########## %d %d\n", __func__, __LINE__, jlinkParam.at(0), hexEdit->dataAt(0,1).at(0));
+    //setWindowModified(hexEdit->isModified());
+	#endif
+}
+
+void JlinkParameterWidget::setOverwriteMode(bool mode)
+{
+	LOGI("########## %s %d ########## %d\n", __func__, __LINE__, mode);
+	
+}
