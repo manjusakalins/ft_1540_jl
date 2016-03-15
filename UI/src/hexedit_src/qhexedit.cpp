@@ -208,6 +208,9 @@ QColor QHexEdit::highlightingColor()
 
 void QHexEdit::setOverwriteMode(bool overwriteMode)
 {
+	//only overw mode support
+	overwriteMode = true;
+
     _overwriteMode = overwriteMode;
     emit overwriteModeChanged(overwriteMode);
 }

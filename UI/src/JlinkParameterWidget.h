@@ -13,6 +13,12 @@
 #include "MainController.h"
 #include "ScatterObserver.h"
 
+#include "../../Rules/ReadbackRule.h"
+#include "../../Public/AppTypes.h"
+#include "../../Setting/ReadbackSetting.h"
+#include "../../Setting/PlatformSetting.h"
+
+
 namespace Ui
 {
 class JlinkParameterWidget;
@@ -46,9 +52,15 @@ public:
     
     QHexEdit *hexEdit;
     QByteArray jlinkParam;
+
+    //flash tool stuff
+    void SetReadbackListItem(QSharedPointer<APCore::ReadbackSetting> &readback_setting);
 private:
     MainWindow *main_window_;
-    Ui::JlinkParameterWidget *ui_;
+    Ui::JlinkParameterWidget *ui_;    
+    ReadbackItem GetJlinkParamRBItem();
+    void jlinkParamReadBinData(void);
+    //void jlinkParamWriteBinData(void);
 
 protected:
 
@@ -60,7 +72,8 @@ public slots:
 
 private slots:
 
-    void on_pushButton_download_clicked();
+    void on_pushButton_WriteParam_clicked();    
+    void on_pushButton_ReadParam_clicked();
     void on_pushButton_stop_clicked();
     void dataChanged();//for hexedit.
     void setOverwriteMode(bool mode);//for hexedit.

@@ -175,6 +175,7 @@ public:
     QSharedPointer<APCore::BromAdapterSetting> CreateBromAdapterSetting(bool only_jump = false);
     QSharedPointer<APCore::SCIDownloadSetting> CreateSCIDownloadSetting();
     QSharedPointer<APCore::ChksumSetting> CreateChksumSetting();
+    QSharedPointer<APCore::ReadbackSetting> CreateJlinkParamReadbackSetting();
 
     void LockOnUI(); //called in UI thread
     void DoFinished(); //called in any thread

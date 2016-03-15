@@ -1848,3 +1848,17 @@ void MainWindow::SetPlatfromForBat()
     option_dialog->SetPlatformSetting(main_controller_->GetPlatformSetting());
     ui->label_status_port->setText(option_dialog->GetDescription());
 }
+
+QSharedPointer<APCore::ReadbackSetting> MainWindow::CreateJlinkParamReadbackSetting()
+{
+    QSharedPointer<APCore::ReadbackSetting> setting(new APCore::ReadbackSetting());
+    setting->set_cb_readback_init(main_callbacks_->ReadbackInit);
+    setting->set_cb_readback_progress(main_callbacks_->ReadbackProgress);
+
+    setting->set_storage_type(main_controller_->GetPlatformSetting()->getFlashToolStorageConfig().GetStorageType());
+
+    jlinkParameter_widget->SetReadbackListItem(setting);
+
+    return setting;
+}
+
