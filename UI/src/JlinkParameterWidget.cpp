@@ -80,7 +80,7 @@ void JlinkParameterWidget::UpdateUI()
 }
 void JlinkParameterWidget::SetTabLabel(QTabWidget *tab_widget, int index)
 {
-    QString label = tr("jlink parameter");
+    QString label = tr("Parameter");
     tab_widget->setTabText(index, label);
 }
 void JlinkParameterWidget::SetShortCut(int cmd, const QString &shortcut)
