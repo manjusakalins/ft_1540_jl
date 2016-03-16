@@ -17,6 +17,8 @@
 #include "../../Public/AppTypes.h"
 #include "../../Setting/ReadbackSetting.h"
 #include "../../Setting/PlatformSetting.h"
+#include "../../Arg/WriteMemoryArg.h"
+#include "../../Setting/WriteMemorySetting.h"
 
 
 namespace Ui
@@ -54,13 +56,19 @@ public:
     QByteArray jlinkParam;
 
     //flash tool stuff
-    void SetReadbackListItem(QSharedPointer<APCore::ReadbackSetting> &readback_setting);
+    void SetReadbackListItem(QSharedPointer<APCore::ReadbackSetting> &readback_setting);//for mainwindow to call init args
+    QSharedPointer<APCore::WriteMemorySetting> CreateJlinkParamWriteMemSetting();//for mainwindow to call init args
 private:
+    HW_StorageType_E storage_;
+    bool platform_changed_;
     MainWindow *main_window_;
-    Ui::JlinkParameterWidget *ui_;    
+    Ui::JlinkParameterWidget *ui_;
+    U64 proinfo_addr;
     ReadbackItem GetJlinkParamRBItem();
     void jlinkParamReadBinData(void);
-    //void jlinkParamWriteBinData(void);
+    void jlinkParamWriteBinData(void);
+    int ArgFlashToolWriteMemory( int n, WriteFlashMemoryParameter *wm_arg, U64 address, char * data, unsigned int length );
+    WriteFlashMemoryParameter *wm_arg;
 
 protected:
 

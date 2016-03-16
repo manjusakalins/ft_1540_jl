@@ -176,6 +176,7 @@ public:
     QSharedPointer<APCore::SCIDownloadSetting> CreateSCIDownloadSetting();
     QSharedPointer<APCore::ChksumSetting> CreateChksumSetting();
     QSharedPointer<APCore::ReadbackSetting> CreateJlinkParamReadbackSetting();
+    QSharedPointer<APCore::WriteMemorySetting> CreateJlinkParamWriteMemorySetting();
 
     void LockOnUI(); //called in UI thread
     void DoFinished(); //called in any thread

@@ -1862,3 +1862,14 @@ QSharedPointer<APCore::ReadbackSetting> MainWindow::CreateJlinkParamReadbackSett
     return setting;
 }
 
+
+QSharedPointer<APCore::WriteMemorySetting> MainWindow::CreateJlinkParamWriteMemorySetting()
+{
+   QSharedPointer<APCore::WriteMemorySetting> setting = jlinkParameter_widget->CreateJlinkParamWriteMemSetting();//(new APCore::WriteMemorySetting());
+
+    setting->set_flash_type(this->main_controller()->GetPlatformSetting()->getFlashToolStorageConfig().GetStorageType());
+    setting->set_cb_write_memory_progress(main_callbacks_->WriteMemoryProcess);
+    setting->set_cb_write_memory_init(main_callbacks_->WriteMemoryInit);
+    return setting;
+}
+
