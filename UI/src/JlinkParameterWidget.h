@@ -63,6 +63,7 @@ private:
     bool platform_changed_;
     MainWindow *main_window_;
     Ui::JlinkParameterWidget *ui_;
+    QLabel *info_label;
     U64 proinfo_addr;
     ReadbackItem GetJlinkParamRBItem();
     void jlinkParamReadBinData(void);
@@ -85,6 +86,7 @@ private slots:
     void on_pushButton_stop_clicked();
     void dataChanged();//for hexedit.
     void setOverwriteMode(bool mode);//for hexedit.
+    void setAddressChanged(qint64 address);//for hexedit.
 
 };
 

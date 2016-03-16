@@ -31,11 +31,18 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 
 	//hexedit init
     hexEdit = new QHexEdit;
+	hexEdit->setMaximumSize(430,80);
 	jlinkParam.fill('0', 20);
 	hexEdit->setData(jlinkParam);
 	connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
     connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(dataChanged()));
-	ui_->verticalLayout->addWidget(hexEdit);
+	connect(hexEdit, SIGNAL(currentAddressChanged(qint64)), this, SLOT(setAddressChanged(qint64)));
+	ui_->horizontalLayout->addWidget(hexEdit);
+	info_label = new QLabel(tr("hwinfo[0]: Project"));
+	info_label->setMinimumSize(350,80);
+	info_label->setAlignment(Qt::AlignTop|Qt::AlignLeft);
+	info_label->show();
+	ui_->horizontalLayout->addWidget(info_label);	
 	ui_->pushButton_WriteParam->setEnabled(false);//init the write can not func
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
@@ -204,6 +211,8 @@ void JlinkParameterWidget::on_pushButton_ReadParam_clicked()
 void JlinkParameterWidget::dataChanged()
 {
 	LOGI("########## %s %d ########## 0x%x 0x%x\n", __func__, __LINE__, jlinkParam.at(0), hexEdit->dataAt(0,1).at(0));
+	
+	//LOGI("########## %s %d ########## size: %d %d \n", __func__, __LINE__, info_label->minimumSizeHint().width(), info_label->minimumSizeHint().height());
 	#if 0
 	QBuffer tmpbuffer;
 	tmpbuffer.setBuffer(&jlinkParam);
@@ -217,6 +226,38 @@ void JlinkParameterWidget::setOverwriteMode(bool mode)
 {
 	LOGI("########## %s %d ########## %d\n", __func__, __LINE__, mode);
 	
+}
+void JlinkParameterWidget::setAddressChanged(qint64 address)
+{
+	char *info_name[20] = {
+		"Project",
+		"HW_ver",
+		"LCD",
+		"Camera",
+		"TP",
+		"customer_misc",
+		"Battery",
+		"TP_PS_Enable",
+		"LOGO",
+		"vibrator_voltage",
+		"weixin_skype_rotation",
+		"HW_INFO11",
+		"HW_INFO12",
+		"lcm_rotation",
+		"modem_bands",
+		"ddr_type",
+		"cpu_frequency",
+		"memory_size",
+		"cpu_cores",
+		"cpu platform"
+	};
+
+	//LOGI("########## %s %d ########## %d\n", __func__, __LINE__, address);
+	char buffer[60];
+	if (address < 20 &&  address >= 0) {
+		snprintf(buffer, 60, "hwinfo[%d]: %s", address, info_name[address]);
+		info_label->setText(buffer);
+	}
 }
 
 void JlinkParameterWidget::jlinkParamReadBinData(void)
@@ -236,6 +277,8 @@ void JlinkParameterWidget::jlinkParamReadBinData(void)
 
 void JlinkParameterWidget::jlinkParamWriteBinData(void)
 {
+	QString dump(jlinkParam.toHex());
+	LOGI("########## %s %d ########## to write:%s\n", __func__, __LINE__, dump.toStdString().c_str());
 	QFile binf;
 	binf.setFileName(JP_FILE_NAME);
 	bool ok = binf.open(QIODevice::ReadWrite);
