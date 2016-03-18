@@ -92,6 +92,7 @@ private slots:
     void setOverwriteMode(bool mode);//for hexedit.
     void setAddressChanged(qint64 address);//for hexedit.
     void slot_OnLoadByScatterEnd_JlinkFormat();
+    void slot_OnHeaderView_click_jlink_format(int index);
 
 };
 

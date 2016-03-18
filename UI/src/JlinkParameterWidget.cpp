@@ -114,6 +114,8 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
     main_window_->scatter_observer()->addObserver(this);
 	connect(main_window_->get_DLWidget(), SIGNAL(signal_load_finished()),this, SLOT(slot_OnLoadByScatterEnd_JlinkFormat()));
+	//for headr all check or not checked:
+	connect(header_,SIGNAL(sectionClicked(int)), this, SLOT(slot_OnHeaderView_click_jlink_format(int)));
 }
 
 JlinkParameterWidget::~JlinkParameterWidget()
@@ -372,15 +374,10 @@ void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
 {
 	LOGI("########## %s %d ##########\n", __func__, __LINE__);
 	std::list<ImageInfo> image_list;
-	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
-	//main_window_->ResetStatus();
-	//Platform platform = main_window_->main_controller()->GetPlatformSetting()->getPlatformConfig();
-
-	//main_window_->setAutoPollingUpperLimit(platform.autoPollingUpperLimit());
-	//main_window_->setIsAutoPollingEnable(platform.isAutoPollingEnable());
     QTableWidgetItem * tableItem;
 	int row_count = 0;
     int row = 0;
+	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
     for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
 		//LOGI("########## %s %d ########## %s\n", __func__, __LINE__, it->name.c_str());
 		row_count++;
@@ -423,3 +420,21 @@ void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
         row++;
 	}
 }
+
+void JlinkParameterWidget::slot_OnHeaderView_click_jlink_format(int index)
+{
+	//LOGI("########## %s %d ########## %d\n", __func__, __LINE__, index);
+	if (index == 0) {
+		bool checked = header_->GetChecked();
+	    QTableWidgetItem * tableItem;
+		std::list<ImageInfo> image_list;
+		main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
+		int row=0;
+	    for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
+	        tableItem = jlinkFormatTableWidget->item(row, ColumnEnable);
+			tableItem->setCheckState(checked?Qt::Checked:Qt::Unchecked);
+			row++;
+		}
+	}
+}
+
