@@ -1,3 +1,5 @@
+#include "DownloadWidget.h"
+#include "ui_DownloadWidget.h"
 #include "JlinkParameterWidget.h"
 #include "ui_JlinkParameterWidget.h"
 #include "MainWindow.h"
@@ -27,11 +29,13 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
     main_window_(window),
     ui_(new Ui::JlinkParameterWidget),
     wm_arg(new WriteFlashMemoryParameter),
+	header_(new CheckHeader(Qt::Horizontal, this)),
     proinfo_addr(0)
 {
     ui_->setupUi(this);	
 
 	//hexedit init
+	hexedit_hori_layout = new QHBoxLayout();
     hexEdit = new QHexEdit;
 	hexEdit->setMaximumSize(430,80);
 	jlinkParam.fill('0', 20);
@@ -39,16 +43,66 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
     connect(hexEdit, SIGNAL(dataChanged()), this, SLOT(dataChanged()));
 	connect(hexEdit, SIGNAL(currentAddressChanged(qint64)), this, SLOT(setAddressChanged(qint64)));
-	ui_->horizontalLayout->addWidget(hexEdit);
+	hexedit_hori_layout->addWidget(hexEdit);
 	info_label = new QLabel(tr("hwinfo[0]: Project"));
 	info_label->setMinimumSize(350,80);
 	info_label->setAlignment(Qt::AlignTop|Qt::AlignLeft);
 	info_label->show();
-	ui_->horizontalLayout->addWidget(info_label);	
+	hexedit_hori_layout->addWidget(info_label);
 	ui_->pushButton_WriteParam->setEnabled(false);//init the write can not func
+	ui_->verticalLayout->addLayout(hexedit_hori_layout);
+
+	//start for format widget:
+	jlinkFormatTableWidget = new QTableWidget();
+	if (jlinkFormatTableWidget->columnCount() < 6)
+		jlinkFormatTableWidget->setColumnCount(6);
+	QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
+	QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+	QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+	QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+	QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+	QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+	jlinkFormatTableWidget->setHorizontalHeaderItem(5, __qtablewidgetitem5);
+
+	jlinkFormatTableWidget->setAcceptDrops(true);
+	jlinkFormatTableWidget->setAutoFillBackground(false);
+	jlinkFormatTableWidget->setFrameShape(QFrame::StyledPanel);
+	jlinkFormatTableWidget->setFrameShadow(QFrame::Sunken);
+	jlinkFormatTableWidget->setLineWidth(2);
+	jlinkFormatTableWidget->setMidLineWidth(1);
+	jlinkFormatTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	jlinkFormatTableWidget->setProperty("showDropIndicator", QVariant(true));
+	jlinkFormatTableWidget->setAlternatingRowColors(true);
+	jlinkFormatTableWidget->setSelectionMode(QAbstractItemView::NoSelection);
+	jlinkFormatTableWidget->setWordWrap(false);
+	jlinkFormatTableWidget->setCornerButtonEnabled(false);
+	jlinkFormatTableWidget->setRowCount(0);
+	jlinkFormatTableWidget->setColumnCount(6);
+	jlinkFormatTableWidget->horizontalHeader()->setVisible(false);
+	jlinkFormatTableWidget->horizontalHeader()->setCascadingSectionResizes(true);
+	jlinkFormatTableWidget->horizontalHeader()->setHighlightSections(true);
+	jlinkFormatTableWidget->horizontalHeader()->setMinimumSectionSize(15);
+	jlinkFormatTableWidget->horizontalHeader()->setProperty("showSortIndicator", QVariant(false));
+	jlinkFormatTableWidget->horizontalHeader()->setStretchLastSection(true);
+	jlinkFormatTableWidget->verticalHeader()->setVisible(false);
+	jlinkFormatTableWidget->verticalHeader()->setDefaultSectionSize(23);
+	jlinkFormatTableWidget->verticalHeader()->setHighlightSections(false);
+	jlinkFormatTableWidget->verticalHeader()->setMinimumSectionSize(34);
+	jlinkFormatTableWidget->verticalHeader()->setProperty("showSortIndicator", QVariant(false));
+	ui_->verticalLayout->addWidget(jlinkFormatTableWidget);
+
+	jlinkFormatTableWidget->setHorizontalHeader(header_);
+	//jlinkFormatTableWidget->setResizeMode(QHeaderView::ResizeToContents);
+	jlinkFormatTableWidget->setColumnHidden(columnRegion, true);
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
     main_window_->scatter_observer()->addObserver(this);
+	connect(main_window_->get_DLWidget(), SIGNAL(signal_load_finished()),this, SLOT(slot_OnLoadByScatterEnd_JlinkFormat()));
 }
 
 JlinkParameterWidget::~JlinkParameterWidget()
@@ -96,7 +150,7 @@ void JlinkParameterWidget::onPlatformChanged()
 }
 
 void JlinkParameterWidget::OnScatterChanged(bool showRegion)
-{	
+{
 	ui_->pushButton_WriteParam->setEnabled(false);
 	jlinkParam.fill('0', 20);
 	hexEdit->setData(jlinkParam);
@@ -171,7 +225,6 @@ ReadbackItem JlinkParameterWidget::GetJlinkParamRBItem()
 	NUTL_AddrTypeFlag_E addr_flag = NUTL_ADDR_LOGICAL;
 	U32 region_id = EMMC_PART_USER;
 	U64 addr;
-    U64 len;
 
 	std::list<ImageInfo> image_list;
 	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
@@ -294,3 +347,7 @@ void JlinkParameterWidget::jlinkParamWriteBinData(void)
 	binf.close();
 }
 
+void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
+{
+	LOGI("########## %s %d ##########\n", __func__, __LINE__);
+}

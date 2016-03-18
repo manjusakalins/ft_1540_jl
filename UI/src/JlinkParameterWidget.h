@@ -63,7 +63,10 @@ private:
     bool platform_changed_;
     MainWindow *main_window_;
     Ui::JlinkParameterWidget *ui_;
+    QHBoxLayout *hexedit_hori_layout;
     QLabel *info_label;
+    QTableWidget *jlinkFormatTableWidget;
+    CheckHeader *header_;
     U64 proinfo_addr;
     ReadbackItem GetJlinkParamRBItem();
     void jlinkParamReadBinData(void);
@@ -87,6 +90,7 @@ private slots:
     void dataChanged();//for hexedit.
     void setOverwriteMode(bool mode);//for hexedit.
     void setAddressChanged(qint64 address);//for hexedit.
+    void slot_OnLoadByScatterEnd_JlinkFormat();
 
 };
 

@@ -148,6 +148,7 @@ public:
     MainController *main_controller() const{ return main_controller_; }
     ProcessingDialog *processing_dialog() const{ return processing_dialog_; }
     MainWindowCallback *main_callbacks() const{ return main_callbacks_; }
+    DownloadWidget *get_DLWidget() const { return download_widget;}
 
     QSharedPointer<ConsoleMode::GeneralSetting> CreateGeneralSetting();
     QSharedPointer<APCore::ConnSetting> CreateConnSetting();
