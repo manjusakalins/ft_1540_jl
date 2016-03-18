@@ -1873,3 +1873,19 @@ QSharedPointer<APCore::WriteMemorySetting> MainWindow::CreateJlinkParamWriteMemo
     return setting;
 }
 
+QSharedPointer<APCore::JlinkComboCustFormatSetting> MainWindow::CreateJlinkComboCustFormatSetting(DL_SCATTER_TYPE type)
+{
+    QSharedPointer<APCore::JlinkComboCustFormatSetting> setting(new APCore::JlinkComboCustFormatSetting());
+
+    setting->set_format_setting(this->CreateFormatSetting());
+	jlinkParameter_widget->SetFormatSettingList(setting);
+    setting->set_storage_type(main_controller_->GetPlatformSetting()->getFlashToolStorageConfig().GetStorageType());
+
+    if(NORMAL_SCATTER == type)
+        setting->set_is_combo_dl(format_widget->get_is_com_dl());
+    else if(SCI_SCATTER == type)
+        setting->set_is_combo_dl(sciDownload_widget_->IsComboSCI());
+
+    return setting;
+}
+

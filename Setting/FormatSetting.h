@@ -107,6 +107,9 @@ public:
     {
         return auto_format_flag;
     }
+    U64 begin_addr;
+    U64 length;
+    EMMC_Part_E part_id;
 
 private:
     FormatSetting(const FormatSetting&);
@@ -124,9 +127,7 @@ private:
 
     bool does_auto_format;
     bool does_whole_format;
-    U64 begin_addr;
-    U64 length;
-    EMMC_Part_E part_id;
+
 
     AutoFormatFlag auto_format_flag;
 };

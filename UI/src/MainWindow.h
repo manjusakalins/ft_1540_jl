@@ -34,6 +34,7 @@
 #include "PlatformObj.h"
 #include "OptionDialog.h"
 #include "OkDialog.h"
+#include "../../Setting/JlinkComboCustFormatSetting.h"
 
 
 namespace Ui
@@ -178,6 +179,7 @@ public:
     QSharedPointer<APCore::ChksumSetting> CreateChksumSetting();
     QSharedPointer<APCore::ReadbackSetting> CreateJlinkParamReadbackSetting();
     QSharedPointer<APCore::WriteMemorySetting> CreateJlinkParamWriteMemorySetting();
+    QSharedPointer<APCore::JlinkComboCustFormatSetting> CreateJlinkComboCustFormatSetting(DL_SCATTER_TYPE type = NORMAL_SCATTER);
 
     void LockOnUI(); //called in UI thread
     void DoFinished(); //called in any thread

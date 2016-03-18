@@ -217,6 +217,8 @@ SOURCES += \
 	UI/src/hexedit_src/qhexedit.cpp \
     UI/src/hexedit_src/chunks.cpp \
     UI/src/hexedit_src/commands.cpp \
+    Cmd/JlinkComboCustFormatCommand.cpp \
+    Setting/JlinkComboCustFormatSetting.cpp \
     UI/src/JlinkParameterWidget.cpp
 
 # ONLY Windows related begins here
@@ -421,6 +423,8 @@ HEADERS += \
 	UI/src/hexedit_src/qhexedit.h \
     UI/src/hexedit_src/chunks.h \
     UI/src/hexedit_src/commands.h \
+	Cmd/JlinkComboCustFormatCommand.h \
+    Setting/JlinkComboCustFormatSetting.h \
     UI/src/JlinkParameterWidget.h
 
 linux:HEADERS += Linux/WINDEF.H \

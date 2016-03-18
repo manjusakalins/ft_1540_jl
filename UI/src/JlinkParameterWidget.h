@@ -19,6 +19,7 @@
 #include "../../Setting/PlatformSetting.h"
 #include "../../Arg/WriteMemoryArg.h"
 #include "../../Setting/WriteMemorySetting.h"
+#include "../../Setting/JlinkComboCustFormatSetting.h"
 
 
 namespace Ui
@@ -57,6 +58,7 @@ public:
 
     //flash tool stuff
     void SetReadbackListItem(QSharedPointer<APCore::ReadbackSetting> &readback_setting);//for mainwindow to call init args
+    void SetFormatSettingList(QSharedPointer<APCore::JlinkComboCustFormatSetting> &jlink_combo_format_setting);
     QSharedPointer<APCore::WriteMemorySetting> CreateJlinkParamWriteMemSetting();//for mainwindow to call init args
 private:
     HW_StorageType_E storage_;

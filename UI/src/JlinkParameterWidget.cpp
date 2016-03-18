@@ -380,7 +380,8 @@ void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
     int row = 0;
 	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
     for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
-		//LOGI("########## %s %d ########## %s\n", __func__, __LINE__, it->name.c_str());
+		//U64 len = it->end_addr - it->begin_addr;
+		//LOGI("########## %s %d ########## %s: %llx: %llx %llx, %llx\n", __func__, __LINE__, it->name.c_str(), it->region_addr, it->begin_addr, it->end_addr, len);
 		row_count++;
     }
 	jlinkFormatTableWidget->setRowCount(row_count);
@@ -442,6 +443,44 @@ void JlinkParameterWidget::slot_OnHeaderView_click_jlink_format(int index)
 void JlinkParameterWidget::on_toolButton_Format_clicked()
 {
 	LOGI("########## %s %d ##########\n", __func__, __LINE__);
+    if(1)
+    {
+        main_window_->main_controller()->SetPlatformSetting();
+        main_window_->main_controller()->SetConnSetting(main_window_->CreateConnSetting());
+        main_window_->main_controller()->QueueAJob(main_window_->CreateJlinkComboCustFormatSetting());
+        main_window_->main_controller()->StartExecuting(
+                    new SimpleCallback<MainWindow>(main_window_,&MainWindow::DoFinished));
+        main_window_->LockOnUI();
+        main_window_->GetOkDialog()->setWindowTitle(LoadQString(LANGUAGE_TAG, IDS_STRING_FORMAT_OK));
+    }
 }
 
+void JlinkParameterWidget::SetFormatSettingList(QSharedPointer<APCore::JlinkComboCustFormatSetting> &jlink_combo_format_setting)
+{
+	std::list<APCore::FormatSetting *> format_list;
+	QTableWidgetItem * tableItem;
+	std::list<ImageInfo> image_list;
+	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
+	int row=0;
+	//FIXME: can not format first and last one.
+	U64 pre_rom_start_addr=0;
+	QTableWidgetItem *pre_tableItem = NULL;
+
+	for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
+	    tableItem = jlinkFormatTableWidget->item(row, ColumnEnable);
+		if (pre_tableItem && pre_tableItem->checkState() == Qt::Checked) {
+			APCore::FormatSetting *fmt_setting_ = new APCore::FormatSetting();
+			fmt_setting_->set_part_id(EMMC_PART_USER);
+	        fmt_setting_->set_begin_addr(pre_rom_start_addr);
+	        fmt_setting_->set_length(it->begin_addr-pre_rom_start_addr);
+			format_list.push_back(fmt_setting_);
+		}
+		pre_rom_start_addr = it->begin_addr;
+		pre_tableItem = tableItem;
+		row++;
+	}
+
+	jlink_combo_format_setting->set_format_setting_list(format_list);
+
+}
 
