@@ -71,7 +71,8 @@ private:
     ReadbackItem GetJlinkParamRBItem();
     void jlinkParamReadBinData(void);
     void jlinkParamWriteBinData(void);
-    int ArgFlashToolWriteMemory( int n, WriteFlashMemoryParameter *wm_arg, U64 address, char * data, unsigned int length );
+    int ArgFlashToolWriteMemory( int n, WriteFlashMemoryParameter *wm_arg, U64 address, char * data, unsigned int length );    
+    void SetRomAddress(int row, int column, U64 address);
     WriteFlashMemoryParameter *wm_arg;
 
 protected:

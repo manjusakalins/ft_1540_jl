@@ -94,11 +94,22 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	jlinkFormatTableWidget->verticalHeader()->setHighlightSections(false);
 	jlinkFormatTableWidget->verticalHeader()->setMinimumSectionSize(34);
 	jlinkFormatTableWidget->verticalHeader()->setProperty("showSortIndicator", QVariant(false));
-	ui_->verticalLayout->addWidget(jlinkFormatTableWidget);
 
 	jlinkFormatTableWidget->setHorizontalHeader(header_);
-	//jlinkFormatTableWidget->setResizeMode(QHeaderView::ResizeToContents);
-	jlinkFormatTableWidget->setColumnHidden(columnRegion, true);
+	jlinkFormatTableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	//jlinkFormatTableWidget->setColumnHidden(columnRegion, true);
+	QTableWidgetItem *___qtablewidgetitem = jlinkFormatTableWidget->horizontalHeaderItem(1);
+	___qtablewidgetitem->setText("Name");
+	QTableWidgetItem *___qtablewidgetitem1 = jlinkFormatTableWidget->horizontalHeaderItem(2);
+	___qtablewidgetitem1->setText("Begin Address");
+	QTableWidgetItem *___qtablewidgetitem2 = jlinkFormatTableWidget->horizontalHeaderItem(3);
+	___qtablewidgetitem2->setText("End Address");
+	QTableWidgetItem *___qtablewidgetitem3 = jlinkFormatTableWidget->horizontalHeaderItem(4);
+	___qtablewidgetitem3->setText("Region");
+	QTableWidgetItem *___qtablewidgetitem4 = jlinkFormatTableWidget->horizontalHeaderItem(5);
+	___qtablewidgetitem4->setText("Location");
+
+	ui_->verticalLayout->addWidget(jlinkFormatTableWidget);
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
     main_window_->scatter_observer()->addObserver(this);
@@ -347,7 +358,68 @@ void JlinkParameterWidget::jlinkParamWriteBinData(void)
 	binf.close();
 }
 
+void JlinkParameterWidget::SetRomAddress(int row, int column, U64 address)
+{
+    QTableWidgetItem *tableItem = jlinkFormatTableWidget->item(row, column);
+    if (tableItem == NULL) {
+        tableItem = new QTableWidgetItem();
+        jlinkFormatTableWidget->setItem(row, column,tableItem);
+    }
+    tableItem->setTextAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+    tableItem->setText(QString("0x%1").arg(address,16,16,QChar('0')));
+}
 void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
 {
 	LOGI("########## %s %d ##########\n", __func__, __LINE__);
+	std::list<ImageInfo> image_list;
+	main_window_->main_controller()->GetImageInfoList(image_list, DOWNLOAD_ONLY);
+	//main_window_->ResetStatus();
+	//Platform platform = main_window_->main_controller()->GetPlatformSetting()->getPlatformConfig();
+
+	//main_window_->setAutoPollingUpperLimit(platform.autoPollingUpperLimit());
+	//main_window_->setIsAutoPollingEnable(platform.isAutoPollingEnable());
+    QTableWidgetItem * tableItem;
+	int row_count = 0;
+    int row = 0;
+    for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
+		//LOGI("########## %s %d ########## %s\n", __func__, __LINE__, it->name.c_str());
+		row_count++;
+    }
+	jlinkFormatTableWidget->setRowCount(row_count);
+
+    for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
+		SetRomAddress(row, ColumnBeginAddr, it->begin_addr);
+		SetRomAddress(row, ColumnEndAddr, it->end_addr);
+
+        tableItem = jlinkFormatTableWidget->item(row, columnRegion);
+        if(tableItem == NULL){
+            tableItem = new QTableWidgetItem();
+            jlinkFormatTableWidget->setItem(row, columnRegion, tableItem);
+        }
+        tableItem->setText(QString::fromLocal8Bit(it->region.c_str()));
+#if 0
+        tableItem = jlinkFormatTableWidget->item(row, ColumnLocation);
+        if (tableItem == NULL) {
+            tableItem = new QTableWidgetItem();
+            jlinkFormatTableWidget->setItem(row, ColumnLocation,tableItem);
+        }
+        tableItem->setText(QDir::toNativeSeparators(QString::fromLocal8Bit(it->location.c_str())));
+#endif
+        tableItem = jlinkFormatTableWidget->item(row, ColumnName);
+        if (tableItem == NULL) {
+            tableItem = new QTableWidgetItem();
+            jlinkFormatTableWidget->setItem(row, ColumnName, tableItem);
+        }
+        tableItem->setText(it->name.c_str());
+
+        tableItem = jlinkFormatTableWidget->item(row, ColumnEnable);
+        if (tableItem == NULL) {
+            tableItem = new QTableWidgetItem();
+            jlinkFormatTableWidget->setItem(row, ColumnEnable, tableItem);
+        }
+		//tableItem->setCheckState(Qt::Checked);
+		tableItem->setCheckState(Qt::Unchecked);
+
+        row++;
+	}
 }
