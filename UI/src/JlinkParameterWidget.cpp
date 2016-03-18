@@ -19,6 +19,8 @@
 #define JP_FILE_NAME ("./jlinkParam.bin")
 #define JP_FILE_LEN (512)
 #define JP_PART_NAME ("proinfo")
+#define JP_PART_NAME1 ("PRO_INFO")
+
 
 JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *window) :
     TabWidgetBase(2, tr("&Download"), parent),
@@ -176,7 +178,8 @@ ReadbackItem JlinkParameterWidget::GetJlinkParamRBItem()
 	for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it)
 	{
 		LOGI("########## %s %d ########## %s\n", __func__, __LINE__, it->name.c_str());
-		if( 0 == it->name.compare(std::string(JP_PART_NAME)) ){
+		if( 0 == it->name.compare(std::string(JP_PART_NAME))||
+			0 == it->name.compare(std::string(JP_PART_NAME1))){
 			addr = it->begin_addr;
 			proinfo_addr = addr;
 			break;
