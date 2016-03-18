@@ -109,6 +109,7 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	QTableWidgetItem *___qtablewidgetitem4 = jlinkFormatTableWidget->horizontalHeaderItem(5);
 	___qtablewidgetitem4->setText("Location");
 
+	jlinkFormatTableWidget->setMinimumSize(600,1200);
 	ui_->verticalLayout->addWidget(jlinkFormatTableWidget);
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
@@ -437,4 +438,10 @@ void JlinkParameterWidget::slot_OnHeaderView_click_jlink_format(int index)
 		}
 	}
 }
+
+void JlinkParameterWidget::on_toolButton_Format_clicked()
+{
+	LOGI("########## %s %d ##########\n", __func__, __LINE__);
+}
+
 

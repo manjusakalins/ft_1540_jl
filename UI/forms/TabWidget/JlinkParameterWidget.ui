@@ -38,26 +38,20 @@
       <property name="spacing">
        <number>0</number>
       </property>
-      <item row="3" column="2">
-       <widget class="QToolButton" name="pushButton_stop">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
+      <item row="2" column="1" rowspan="2">
+       <widget class="QToolButton" name="pushButton_ReadParam">
         <property name="minimumSize">
          <size>
           <width>110</width>
           <height>0</height>
          </size>
         </property>
-        <property name="toolTip">
-         <string>F10</string>
-        </property>
         <property name="text">
-         <string>Stop</string>
+         <string>ReadParam</string>
         </property>
         <property name="icon">
          <iconset resource="../../icon.qrc">
-          <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+          <normaloff>:/images/readBack.png</normaloff>:/images/readBack.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -73,7 +67,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="3">
+      <item row="3" column="4">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -130,8 +124,43 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1" rowspan="2">
-       <widget class="QToolButton" name="pushButton_ReadParam">
+      <item row="3" column="3">
+       <widget class="QToolButton" name="pushButton_stop">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>110</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>F10</string>
+        </property>
+        <property name="text">
+         <string>Stop</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../icon.qrc">
+          <normaloff>:/images/stop.png</normaloff>:/images/stop.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QToolButton" name="toolButton_Format">
         <property name="minimumSize">
          <size>
           <width>110</width>
@@ -139,11 +168,11 @@
          </size>
         </property>
         <property name="text">
-         <string>ReadParam</string>
+         <string>Format</string>
         </property>
         <property name="icon">
          <iconset resource="../../icon.qrc">
-          <normaloff>:/images/readBack.png</normaloff>:/images/readBack.png</iconset>
+          <normaloff>:/images/format.png</normaloff>:/images/format.png</iconset>
         </property>
         <property name="iconSize">
          <size>

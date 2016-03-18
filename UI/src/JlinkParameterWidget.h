@@ -87,6 +87,7 @@ private slots:
 
     void on_pushButton_WriteParam_clicked();    
     void on_pushButton_ReadParam_clicked();
+    void on_toolButton_Format_clicked();
     void on_pushButton_stop_clicked();
     void dataChanged();//for hexedit.
     void setOverwriteMode(bool mode);//for hexedit.
