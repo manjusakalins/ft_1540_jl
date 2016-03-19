@@ -12,7 +12,9 @@ JlinkComboCustFormatCommand::JlinkComboCustFormatCommand(APKey key):
 
 JlinkComboCustFormatCommand::~JlinkComboCustFormatCommand()
 {
-
+	for(std::list<APCore::FormatSetting *>::const_iterator it = fmt_setting_list_.begin(); it != fmt_setting_list_.end(); ++it) {
+		delete (*it);
+	}
 }
 
 void JlinkComboCustFormatCommand::exec(const QSharedPointer<Connection> &conn)

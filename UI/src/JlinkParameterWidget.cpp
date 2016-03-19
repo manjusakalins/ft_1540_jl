@@ -125,6 +125,12 @@ JlinkParameterWidget::~JlinkParameterWidget()
     //item.SaveStringListValue(scatterFile_historyList_);
 
     delete ui_;
+	delete jlinkFormatTableWidget;
+	delete info_label;
+	delete hexEdit;
+	delete hexedit_hori_layout;
+	delete wm_arg;
+	delete header_;
 }
 
 //============base ui====================
@@ -134,6 +140,7 @@ void JlinkParameterWidget::LockOnUI()
     ui_->pushButton_ReadParam->setEnabled(false);
 	ui_->pushButton_WriteParam->setEnabled(false);
     ui_->pushButton_stop->setEnabled(true);
+	ui_->toolButton_Format->setEnabled(false);
 }
 
 void JlinkParameterWidget::DoFinished()
@@ -141,6 +148,7 @@ void JlinkParameterWidget::DoFinished()
 	jlinkParamReadBinData();
     ui_->pushButton_ReadParam->setEnabled(true);
 	ui_->pushButton_WriteParam->setEnabled(true);
+	ui_->toolButton_Format->setEnabled(true);
     ui_->pushButton_stop->setEnabled(false);
 
 }
