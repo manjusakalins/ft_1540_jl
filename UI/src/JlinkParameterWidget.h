@@ -67,6 +67,7 @@ private:
     Ui::JlinkParameterWidget *ui_;
     QHBoxLayout *hexedit_hori_layout;
     QLabel *info_label;
+    QSpacerItem *horizontalSpacer_2;
     QTableWidget *jlinkFormatTableWidget;
     CheckHeader *header_;
     U64 proinfo_addr;

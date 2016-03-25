@@ -37,7 +37,8 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	//hexedit init
 	hexedit_hori_layout = new QHBoxLayout();
     hexEdit = new QHexEdit;
-	hexEdit->setMaximumSize(430,80);
+	hexEdit->setMaximumSize(420,80);
+	hexEdit->setMinimumSize(405,80);
 	jlinkParam.fill('0', 20);
 	hexEdit->setData(jlinkParam);
 	connect(hexEdit, SIGNAL(overwriteModeChanged(bool)), this, SLOT(setOverwriteMode(bool)));
@@ -50,9 +51,12 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	info_label->show();
 	hexedit_hori_layout->addWidget(info_label);
 	ui_->pushButton_WriteParam->setEnabled(false);//init the write can not func
-	ui_->verticalLayout->addLayout(hexedit_hori_layout);
+	ui_->horizontalLayout->addLayout(hexedit_hori_layout);
+	horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+	ui_->horizontalLayout->addItem(horizontalSpacer_2);
 
 	//start for format widget:
+	#if 0
 	jlinkFormatTableWidget = new QTableWidget();
 	if (jlinkFormatTableWidget->columnCount() < 6)
 		jlinkFormatTableWidget->setColumnCount(6);
@@ -95,8 +99,7 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	jlinkFormatTableWidget->verticalHeader()->setMinimumSectionSize(34);
 	jlinkFormatTableWidget->verticalHeader()->setProperty("showSortIndicator", QVariant(false));
 
-	jlinkFormatTableWidget->setHorizontalHeader(header_);
-	jlinkFormatTableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+
 	//jlinkFormatTableWidget->setColumnHidden(columnRegion, true);
 	QTableWidgetItem *___qtablewidgetitem = jlinkFormatTableWidget->horizontalHeaderItem(1);
 	___qtablewidgetitem->setText("Name");
@@ -109,8 +112,18 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	QTableWidgetItem *___qtablewidgetitem4 = jlinkFormatTableWidget->horizontalHeaderItem(5);
 	___qtablewidgetitem4->setText("Location");
 
-	jlinkFormatTableWidget->setMinimumSize(600,1200);
+	//jlinkFormatTableWidget->setMinimumSize(600,300);
+	//jlinkFormatTableWidget->setMinimumSize(600,1200);
+	//jlinkFormatTableWidget->setMaximumSize (1600,1300);
+	jlinkFormatTableWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+	//ui_->verticalLayout->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	ui_->verticalLayout->addWidget(jlinkFormatTableWidget);
+#endif
+	jlinkFormatTableWidget = ui_->jlinkFormatTableWidget;
+	jlinkFormatTableWidget->setHorizontalHeader(header_);
+	jlinkFormatTableWidget->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+	//jlinkFormatTableWidget->setColumnHidden(columnRegion, true);
+
 
     main_window_->main_controller()->GetPlatformSetting()->addObserver(this);
     main_window_->scatter_observer()->addObserver(this);
