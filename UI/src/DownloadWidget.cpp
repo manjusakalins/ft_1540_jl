@@ -215,6 +215,11 @@ void DownloadWidget::on_pushButton_download_clicked()
 
     if(ValidateBeforeDownload())
     {
+    	if (ui_->loopDL_CheckBox->isChecked() && ui_->skipShowOK_CheckBox->isChecked()){
+			main_window_->setIsAutoPollingEnable(1);
+			main_window_->setAutoPollingUpperLimit(1000);
+		} else
+			main_window_->setIsAutoPollingEnable(0);
         StartDownload();
         main_window_->LockOnUI();
         main_window_->GetOkDialog()->setWindowTitle(LoadQString(LANGUAGE_TAG, IDS_STRING_DOWNLOAD_OK));

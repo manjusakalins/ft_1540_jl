@@ -640,15 +640,19 @@ void MainWindow::DoFinished()
             is_ok_)
     {
         auto_polling_count_++;
-        LOGD("Auto polling upper limit(%d), polling count(%d).",
+        LOGI("Auto polling upper limit(%d), polling count(%d).",
              this->auto_polling_upper_limit_,
              this->auto_polling_count_);
+		
+		char buffer[20];
+		snprintf(buffer, 20, "dl cnt: %d", auto_polling_count_);
+		ui->label_SpeedInfo->setText(tr(buffer));
     }
     else
     {
         finish_ = true;
 
-        auto_polling_count_ = 0;
+        //auto_polling_count_ = 0;
 
         emit signal_UnlockUI();
     }
@@ -1053,12 +1057,23 @@ void MainWindow::UpdatePlatformImageString(const QString str, const QString owne
 
 void MainWindow::ResetStatus()
 {
+	QDateTime time = QDateTime::currentDateTime();
+	QString str = time.toString("hh:mm:ss ddd");
+
     ui->progressBar->setValue(0);
 
     ui->progressBar->setFormat(tr(""));
-
+	if (finish_ && auto_polling_count_) {
+		char buffer[20];
+		snprintf(buffer, 20, "dl cnt: %d", auto_polling_count_);
+		ui->label_SpeedInfo->setText(tr(buffer));
+		auto_polling_count_=0;
+	} else
     ui->label_SpeedInfo->setText(tr("0 B/s"));
 
+	if (finish_)
+		ui->label_total->setText(str);
+	else
     ui->label_total->setText(tr("0 Bytes"));
 
     ui->label_time->setText("0:00");
