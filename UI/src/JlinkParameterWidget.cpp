@@ -37,7 +37,7 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	//hexedit init
 	hexedit_hori_layout = new QHBoxLayout();
     hexEdit = new QHexEdit;
-	hexEdit->setMaximumSize(420,80);
+	hexEdit->setMaximumSize(405,80);
 	hexEdit->setMinimumSize(405,80);
 	jlinkParam.fill('0', 20);
 	hexEdit->setData(jlinkParam);
@@ -47,6 +47,8 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	hexedit_hori_layout->addWidget(hexEdit);
 	info_label = new QLabel(tr("hwinfo[0]: Project"));
 	info_label->setMinimumSize(350,80);
+	info_label->setMaximumSize(350,80);
+	
 	info_label->setAlignment(Qt::AlignTop|Qt::AlignLeft);
 	info_label->show();
 	hexedit_hori_layout->addWidget(info_label);
