@@ -52,7 +52,7 @@ JlinkParameterWidget::JlinkParameterWidget(QTabWidget *parent, MainWindow *windo
 	info_label->setAlignment(Qt::AlignTop|Qt::AlignLeft);
 	info_label->show();
 	hexedit_hori_layout->addWidget(info_label);
-	ui_->pushButton_WriteParam->setEnabled(false);//init the write can not func
+	//ui_->pushButton_WriteParam->setEnabled(false);//init the write can not func
 	ui_->horizontalLayout->addLayout(hexedit_hori_layout);
 	horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 	ui_->horizontalLayout->addItem(horizontalSpacer_2);
@@ -188,7 +188,7 @@ void JlinkParameterWidget::onPlatformChanged()
 
 void JlinkParameterWidget::OnScatterChanged(bool showRegion)
 {
-	ui_->pushButton_WriteParam->setEnabled(false);
+	//ui_->pushButton_WriteParam->setEnabled(false);
 	jlinkParam.fill('0', 20);
 	hexEdit->setData(jlinkParam);
 }
@@ -409,6 +409,7 @@ void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
     }
 	jlinkFormatTableWidget->setRowCount(row_count);
 
+	row_count=0;
     for(std::list<ImageInfo>::const_iterator it = image_list.begin(); it != image_list.end(); ++it) {
 		SetRomAddress(row, ColumnBeginAddr, it->begin_addr);
 		SetRomAddress(row, ColumnEndAddr, it->end_addr);
@@ -419,13 +420,15 @@ void JlinkParameterWidget::slot_OnLoadByScatterEnd_JlinkFormat()
             jlinkFormatTableWidget->setItem(row, columnRegion, tableItem);
         }
         tableItem->setText(QString::fromLocal8Bit(it->region.c_str()));
-#if 0
+#if 1
         tableItem = jlinkFormatTableWidget->item(row, ColumnLocation);
         if (tableItem == NULL) {
             tableItem = new QTableWidgetItem();
             jlinkFormatTableWidget->setItem(row, ColumnLocation,tableItem);
         }
-        tableItem->setText(QDir::toNativeSeparators(QString::fromLocal8Bit(it->location.c_str())));
+		char buffer[20];
+		snprintf(buffer,20,"mmcblk0:p%d", row-1);
+        tableItem->setText(QString::fromLocal8Bit(buffer));
 #endif
         tableItem = jlinkFormatTableWidget->item(row, ColumnName);
         if (tableItem == NULL) {
